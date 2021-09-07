@@ -1,9 +1,9 @@
 ## Install
-Requires ts-node:
 
 ```npm i```
 
 ## Run
+Requires ts-node:
 
 ```npm run start```
 
