@@ -81,20 +81,23 @@ describe('readBitmapsStdin', function() {
   });
 
   it('returns two bitmaps when all preconditions have been satisfied', async function() {
+    const nrCases = 2;
     const bitmap1NrLin = 2;
     const bitmap1NrCol = 3;
-    const inputLinesBitmap1 = [
-      "101",
-      "001"
+    const inputBitmap1: Array<Array<0 | 1>> = [
+      [1, 0, 1],
+      [0, 0, 1]
     ];
+    const inputLinesBitmap1 = inputBitmap1.map(l => l.join(""));
     const bitmap2NrLin = 3;
     const bitmap2NrCol = 2;
-    const inputLinesBitmap2 = [
-      "00",
-      "01",
-      "00"
+    const inputBitmap2: Array<Array<0 | 1>> = [
+      [0, 0],
+      [0, 1],
+      [0, 0]
     ]
-    const inputLines = ["2",
+    const inputLinesBitmap2 = inputBitmap2.map(l => l.join(""));
+    const inputLines = [`${nrCases}`,
       `${bitmap1NrLin} ${bitmap1NrCol}`,
       ...inputLinesBitmap1,
       "",
@@ -106,27 +109,9 @@ describe('readBitmapsStdin', function() {
 
     expect(result).to.be.an('array');
     const bitmap1 = (Array.isArray(result) && result[0]) as Bitmap;
-    expect(bitmap1.nrLin).equal(bitmap1NrLin);
-    expect(bitmap1.nrCol).equal(bitmap1NrCol);
-    expect(bitmap1.elementAt(0, 0)).equal(1);
-    expect(bitmap1.elementAt(0, 1)).equal(0);
-    expect(bitmap1.elementAt(0, 2)).equal(1);
-
-    expect(bitmap1.elementAt(1, 0)).equal(0);
-    expect(bitmap1.elementAt(1, 1)).equal(0);
-    expect(bitmap1.elementAt(1, 2)).equal(1);
-
     const bitmap2 = (Array.isArray(result) && result[1]) as Bitmap;
-    expect(bitmap2.nrLin).equal(bitmap2NrLin);
-    expect(bitmap2.nrCol).equal(bitmap2NrCol);
-    expect(bitmap2.elementAt(0, 0)).equal(0);
-    expect(bitmap2.elementAt(0, 1)).equal(0);
-
-    expect(bitmap2.elementAt(1, 0)).equal(0);
-    expect(bitmap2.elementAt(1, 1)).equal(1);
-
-    expect(bitmap2.elementAt(2, 0)).equal(0);
-    expect(bitmap2.elementAt(2, 1)).equal(0);
+    assertBitmap(bitmap1, inputBitmap1);
+    assertBitmap(bitmap2, inputBitmap2);
   });
 });
 
@@ -155,6 +140,19 @@ async function assertInvalidBitmapLine(input: string, nrCol: number) {
   const expectedErr = inputErrors.invalidLineNrCol(input, nrCol)
 
   assertInputError(result, input, expectedErr);
+}
+
+function assertBitmap(bitmap: Bitmap, expectedMap: Array<Array<0 | 1>>) {
+  expect(bitmap.nrLin).not.equal(0);
+  expect(bitmap.nrCol).not.equal(0);
+  expect(bitmap.nrLin).equal(expectedMap.length);
+  expect(bitmap.nrCol).equal(expectedMap[0].length);
+
+  for (let l = 0; l < bitmap.nrLin; l++) {
+    for (let c = 0; c < bitmap.nrCol; c++) {
+      expect(bitmap.elementAt(l, c)).equal(expectedMap[l][c])
+    }
+  }
 }
 
 function assertInputError(result: InputError | Array<Bitmap>, input: string, expectedErr: InputError) {
