@@ -1,5 +1,6 @@
 ## Install
-Requires ts-node
+Requires ts-node:
+
 ```npm i```
 
 ## Run
