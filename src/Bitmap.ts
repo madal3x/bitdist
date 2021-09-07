@@ -10,7 +10,7 @@ export default class Bitmap {
     }
 
     nearestWhiteDistances(): Array<Array<number>> {
-        let output: Array<Array<number>> = [...Array(this.nrLin).keys()].map(_ => new Array(this.nrCol));
+        let output: Array<Array<number>> = initArray(this.nrLin, this.nrCol);
         for (let lin = 0; lin < this.nrLin; lin++) {
             for (let col = 0; col < this.nrCol; col++) {
                 const maxDist = this.nrLin + this.nrCol - 2;
@@ -60,4 +60,8 @@ export default class Bitmap {
 
 function distance(l1: number, c1: number, l2: number, c2: number): number {
     return Math.abs(l1 - l2) + Math.abs(c1 - c2);
+}
+
+function initArray<T>(nrLin: number, nrCol: number): Array<Array<T>> {
+    return [...Array(nrLin).keys()].map(_ => new Array(nrCol))
 }
