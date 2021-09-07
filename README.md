@@ -1,15 +1,15 @@
 ## Install
-
-npm i
+Requires ts-node
+```npm i```
 
 ## Run
 
-npm run start
+```npm run start```
 
 ## Test
 
-npm run test
+```npm run test```
 
 ## Coverage
 
-npm run coverage
+```npm run coverage```
