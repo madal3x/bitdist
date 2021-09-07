@@ -43,6 +43,18 @@ describe('Bitmap', function() {
         ];
         assertBitmapNearest(input, expectedOut);
     });
+
+    it('returns expected nearest white distances for when there is only one line and one column:\n' +
+        '[[1]]', async function () {
+
+        const input: Array<Array<0 | 1>> = [
+            [1]
+        ]
+        const expectedOut = [
+            [0]
+        ];
+        assertBitmapNearest(input, expectedOut);
+    });
 });
 
 
