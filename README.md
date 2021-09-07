@@ -1,15 +1,15 @@
-# Install
+## Install
 
 npm i
 
-# Run
+## Run
 
 npm run start
 
-# Test
+## Test
 
 npm run test
 
-# Coverage
+## Coverage
 
 npm run coverage
